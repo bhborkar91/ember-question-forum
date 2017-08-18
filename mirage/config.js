@@ -1,12 +1,30 @@
 export default function() {
 
-  // These comments are here to help you get started. Feel free to delete them.
 
-  /*
-    Config (with defaults).
+  this.namespace = '/api';
+  this.get('/questions', function (schema, request) {
+    return [
+      {
+        id: 1,
+        question: "Who?"
+      }, {
+        id: 2,
+        question: "Who else?"
+      }
+    ];
+  });
 
-    Note: these only affect routes defined *after* them!
-  */
+  this.get('/questions/:q_id/answers', function(schema, request) {
+    return [
+      {
+        answerid: 1,
+        answer: "Me"
+      }, {
+        answerid: 2,
+        answer: "You"
+      }
+    ];
+  });
 
   // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
   // this.namespace = '';    // make this `/api`, for example, if your API is namespaced

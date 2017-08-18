@@ -1,5 +1,5 @@
 <div class="container">
   {{#each model as |question|}}
-    <div>Question : {{question.question}}</div>
+    {{question-listing question=question}}
   {{/each}}
 </div>

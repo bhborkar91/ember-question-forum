@@ -1,14 +1,23 @@
 import DS from 'ember-data';
 
-export default DS.JSONSerializer.extend({
+export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
+  attrs: {
+    answers: {
+      embedded: 'always'
+    }
+  },
   mapToJsonApi: function(questionInput) {
-    return {
+
+    var jsonData = {
       type: 'question',
-      id: questionInput.id,
+      id: questionInput.questionid,
       attributes: {
+        questionid: questionInput.questionid,
         question: questionInput.question
       }
-    }
+    };
+
+    return jsonData;
   },
   normalizeFindAllResponse: function (store, primaryModelClass, payload, id, requestType) {
     var responseData = [];
@@ -16,8 +25,10 @@ export default DS.JSONSerializer.extend({
     payload.forEach(function(object) {
       responseData.push(serializer.mapToJsonApi(object));
     })
-    return {
+    var jsonApiData = {
       data: responseData
     };
+    console.log(jsonApiData);
+    return jsonApiData;
   }
 });

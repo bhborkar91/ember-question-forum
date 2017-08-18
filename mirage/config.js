@@ -5,16 +5,16 @@ export default function() {
   this.get('/questions', function (schema, request) {
     return [
       {
-        id: 1,
+        questionid: 1,
         question: "Who?"
       }, {
-        id: 2,
+        questionid: 2,
         question: "Who else?"
       }
     ];
   });
 
-  this.get('/questions/:q_id/answers', function(schema, request) {
+  this.get('questions/:q_id/answers', function(schema, request) {
     return [
       {
         answerid: 1,

@@ -14,7 +14,7 @@ export default function() {
     ];
   });
 
-  this.get('questions/:q_id/answers', function(schema, request) {
+  this.get('/questions/:qid/answers', function(schema, request) {
     return [
       {
         answerid: 1,

@@ -1,11 +1,8 @@
 import DS from 'ember-data';
+import config from '../config/environment';
 
-export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
-  attrs: {
-    answers: {
-      embedded: 'always'
-    }
-  },
+export default DS.JSONAPISerializer.extend({
+
   mapToJsonApi: function(questionInput) {
 
     var jsonData = {
@@ -14,6 +11,13 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
       attributes: {
         questionid: questionInput.questionid,
         question: questionInput.question
+      },
+      relationships: {
+        answers: {
+          links: {
+            related: config.apiNamespace+'/questions/'+questionInput.questionid+'/answers'
+          }
+        }
       }
     };
 
@@ -28,7 +32,6 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
     var jsonApiData = {
       data: responseData
     };
-    console.log(jsonApiData);
     return jsonApiData;
   }
 });

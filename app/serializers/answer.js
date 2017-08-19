@@ -10,14 +10,15 @@ export default DS.JSONAPISerializer.extend({
       }
     }
   },
-  normalizeFindAllResponse: function (store, primaryModelClass, payload, id, requestType) {
+  normalizeFindHasManyResponse: function (store, primaryModelClass, payload, id, requestType) {
     var responseData = [];
     var serializer = this;
     payload.forEach(function(object) {
       responseData.push(serializer.mapToJsonApi(object));
     })
-    return {
+    var jsonApiData = {
       data: responseData
     };
+    return jsonApiData;
   }
 });

@@ -1,6 +1,6 @@
-import DS from 'ember-data';
+import ApplicationSerializer from './application';
 
-export default DS.JSONAPISerializer.extend({
+export default ApplicationSerializer.extend({
   mapToJsonApi: function(object) {
     return {
       type: 'answer',
@@ -10,15 +10,7 @@ export default DS.JSONAPISerializer.extend({
       }
     }
   },
-  normalizeFindHasManyResponse: function (store, primaryModelClass, payload, id, requestType) {
-    var responseData = [];
-    var serializer = this;
-    payload.forEach(function(object) {
-      responseData.push(serializer.mapToJsonApi(object));
-    })
-    var jsonApiData = {
-      data: responseData
-    };
-    return jsonApiData;
+  normalizeFindHasManyResponse: function(store, primaryModelClass, payload, id, requestType) {
+    return this.customNormalizeArray(store, primaryModelClass, payload, id, requestType);
   }
 });

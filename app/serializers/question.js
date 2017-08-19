@@ -1,10 +1,7 @@
-import DS from 'ember-data';
-import config from '../config/environment';
+import ApplicationSerializer from './application';
 
-export default DS.JSONAPISerializer.extend({
-
+export default ApplicationSerializer.extend({
   mapToJsonApi: function(questionInput) {
-
     var jsonData = {
       type: 'question',
       id: questionInput.questionid,
@@ -13,25 +10,13 @@ export default DS.JSONAPISerializer.extend({
         question: questionInput.question
       },
       relationships: {
-        answers: {
-          links: {
-            related: config.apiNamespace+'/questions/'+questionInput.questionid+'/answers'
-          }
-        }
+        answers: this.getLink('/questions/'+questionInput.questionid+'/answers')
       }
     };
-
     return jsonData;
   },
-  normalizeFindAllResponse: function (store, primaryModelClass, payload, id, requestType) {
-    var responseData = [];
-    var serializer = this;
-    payload.forEach(function(object) {
-      responseData.push(serializer.mapToJsonApi(object));
-    })
-    var jsonApiData = {
-      data: responseData
-    };
-    return jsonApiData;
+
+  normalizeFindAllResponse: function(store, primaryModelClass, payload, id, requestType) {
+    return this.customNormalizeArray(store, primaryModelClass, payload, id, requestType);
   }
 });

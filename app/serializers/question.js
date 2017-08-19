@@ -10,7 +10,8 @@ export default ApplicationSerializer.extend({
         question: questionInput.question
       },
       relationships: {
-        answers: this.getLink('/questions/'+questionInput.questionid+'/answers')
+        answers: this.getLink('/questions/'+questionInput.questionid+'/answers'),
+        comments: this.getLink('/questions/'+questionInput.questionid+'/comments')
       }
     };
     return jsonData;

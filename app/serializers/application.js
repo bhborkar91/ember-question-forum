@@ -19,6 +19,7 @@ export default DS.JSONAPISerializer.extend({
   customNormalizeArray: function(store, primaryModelClass, payload, id, requestType) {
     var responseData = [];
     var serializer = this;
+    console.log("Payload of customNormalizeArray = "+JSON.stringify(payload));
     payload.forEach(function(object) {
       responseData.push(serializer.mapToJsonApi(object));
     });

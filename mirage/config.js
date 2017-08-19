@@ -1,29 +1,18 @@
-export default function() {
+export default function(server) {
 
 
   this.namespace = '/api';
   this.get('/questions', function (schema, request) {
-    return [
-      {
-        questionid: 1,
-        question: "Who?"
-      }, {
-        questionid: 2,
-        question: "Who else?"
-      }
-    ];
+    var mirageData = schema.questions.all();
+    console.log(JSON.stringify(mirageData));
+    return mirageData;
   });
 
   this.get('/questions/:qid/answers', function(schema, request) {
-    return [
-      {
-        answerid: 1,
-        answer: "Me"
-      }, {
-        answerid: 2,
-        answer: "You"
-      }
-    ];
+    var qid = request.params.qid;
+    var question = schema.questions.findBy({questionid: qid});
+    var mirageData = schema.answers.find(question.answerIds);
+    return mirageData;
   });
 
   // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server

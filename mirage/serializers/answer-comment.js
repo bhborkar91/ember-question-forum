@@ -5,6 +5,7 @@ export default BaseSerializer.extend({
     var json = response.models.map(function(object){
       return {
         commentid: object.commentid,
+        answerid: object.answerid,
         comment: object.comment
       };
     });

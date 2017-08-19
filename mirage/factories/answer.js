@@ -7,6 +7,7 @@ export default Factory.extend({
   afterCreate: function(answer, server) {
     server.createList('answer-comment', 5, {
       answer: answer,
+      answerid: answer.answerid,
       comment: "Answer-comment for "+answer.answer
     });
   }

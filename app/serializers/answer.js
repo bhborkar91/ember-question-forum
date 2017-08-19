@@ -7,11 +7,11 @@ export default ApplicationSerializer.extend({
       id: object.answerid,
       attributes: {
         answer: object.answer
-      }/*,
+      },
       relationships: {
-        comments: this.getLink('/questions/'+questionInput.questionid+'/comments')
+        comments: this.getLink('/questions/'+object.questionid+'/answers/'+object.answerid+'/comments')
 
-      }*/
+      }
     }
   },
   normalizeFindHasManyResponse: function(store, primaryModelClass, payload, id, requestType) {

@@ -22,6 +22,14 @@ export default function(server) {
     return mirageData;
   });
 
+  this.get('/questions/:qid/answers/:aid/comments', function(schema, request) {
+    var qid = request.params.qid;
+    var aid = request.params.aid;
+    var answer = schema.answers.findBy({answerid: aid});
+    var mirageData = schema.answerComments.find(answer.commentIds);
+    return mirageData;
+  });
+
   // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
   // this.namespace = '';    // make this `/api`, for example, if your API is namespaced
   // this.timing = 400;      // delay for each request, automatically set to 0 during testing

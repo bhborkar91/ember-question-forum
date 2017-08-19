@@ -8,12 +8,14 @@ export default Factory.extend({
     return "Question #"+i;
   },
   afterCreate: function(question, server) {
-    server.createList('answer', 10, {
+    server.createList('answer', 5, {
       question: question,
+      questionid: question.questionid,
       answer: "Answer to "+question.question
     });
-    server.createList('question-comment', 10, {
+    server.createList('question-comment', 5, {
       question: question,
+      questionid: question.questionid,
       comment: "Question-comment for "+question.question
     });
   }

@@ -1,3 +1,9 @@
 <div >
-  <div>Answer = {{answer.answer}}</div>
+  <h3>Answer = {{answer.answer}}</h3>
+  <div class="container">
+    <h4>Comments on Answer</h4>
+    {{#each answer.comments as |comment|}}
+      <p>{{comment.comment}}</p>
+    {{/each}}
+  </div>
 </div>

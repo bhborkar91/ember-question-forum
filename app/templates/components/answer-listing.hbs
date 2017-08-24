@@ -1,9 +1,11 @@
 <div >
   <h3>Answer = {{answer.answer}}</h3>
   <div class="container">
-    <h4>Comments on Answer</h4>
-    {{#each answer.comments as |comment|}}
-      <p>{{comment.comment}}</p>
-    {{/each}}
+    <h4 {{action "toggleComments" on="click"}}>Comments on Answer</h4>
+    {{#if commentsVisible}}
+      {{#each answer.comments as |comment|}}
+        <p>{{comment.comment}}</p>
+      {{/each}}
+    {{/if}}
   </div>
 </div>

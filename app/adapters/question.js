@@ -15,14 +15,30 @@ export default ApplicationAdapter.extend({
       var answerComposite = questionList.map((q) => adapter.ajax({
           type: 'GET',
           url: adapter.buildUrl('/questions/'+q.questionid+'/answers')
-        }).then(function(response) {
-          q.answers = response;
+        }).then(function(answerList) {
+          q.answers = answerList;
+          console.log("Answers for question "+q.questionid+" = " +JSON.stringify(answerList));
+          var answerCommentComposite = answerList.map((a) => adapter.ajax({
+            type: 'GET',
+            url: adapter.buildUrl('/questions/'+q.questionid+'/answers/'+a.answerid+'/comments')
+          }).then(function(commentList) {
+            a.comments = commentList;
+          }));
+          return Promise.all(answerCommentComposite);
         })
       );
 
-      return Promise.all(answerComposite).then(function() {
+      var questionCommentComposite = questionList.map((q) => adapter.ajax({
+          type: 'GET',
+          url: adapter.buildUrl('/questions/'+q.questionid+'/comments')
+        }).then(function(commentList) {
+          q.comments = commentList;
+        })
+      );
+
+      return Promise.all(answerComposite, questionCommentComposite).then(function() {
         console.log("Final question list : "+JSON.stringify(questionList));
-        var data = {data: questionList.map((q) => adapter.morphQuestion(q))};
+        var data = questionList.map((q) => adapter.morphQuestion(q));
         console.log(JSON.stringify(data));
         return data;
       });

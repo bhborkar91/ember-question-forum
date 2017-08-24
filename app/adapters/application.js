@@ -7,23 +7,25 @@ export default DS.RESTAdapter.extend({
     urlParts.push(args);
     return urlParts.join('');
   },
+  coalesce: function(object) {
+    return object === undefined ? [] : object;
+  },
   morphQuestion: function(question) {
-    return {
-      type: 'question',
-      id: question.questionid,
-      attributes: question,
-      relationships: {
-        answers: {
-          data: question.answers.map((a) => this.morphAnswer(a))
-        }
-      }
-    };
+    var hash = question;
+    hash.id = question.questionid;
+    hash.answers = this.coalesce(question.answers).map((a) => this.morphAnswer(a));
+    hash.comments = this.coalesce(question.comments).map((c) => this.morphComment(c));
+    return hash;
   },
   morphAnswer: function(answer) {
-    return {
-      type: 'answer',
-      id: answer.answerid,
-      attributes: answer
-    };
+    var hash = answer;
+    hash.id = answer.answerid;
+    hash.comments = this.coalesce(answer.comments).map((c) => this.morphComment(c));
+    return hash;
+  },
+  morphComment: function(comment) {
+    var hash = comment;
+    hash.id = comment.commentid;
+    return hash;
   }
 });
